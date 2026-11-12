@@ -10,4 +10,9 @@ https://github.com/wilisail/event-management-platform-pwdk/tree/a74a77c74b2c50ce
 
 These owner-authored modules are released here under the root MIT license. No event, organizer, referral, rewards, storage or email modules were imported.
 
-Runtime dependencies retain their own package licenses. The lockfile records the versions. Spree's MIT storefront is a later-block candidate; no Spree code has been imported in Block 1.
+Block 2 adapts the lazy SDK loading and callback structure of Spree's MIT `PayPalPaymentForm.tsx`, removing its checkout framework, translations and extra funding methods:
+https://github.com/spree/storefront/blob/63cf0dc0aec38d7c50adbc316da124d9908f27ca/src/components/checkout/PayPalPaymentForm.tsx
+
+Copyright (c) 2026 Vendo Connect Inc., Vendo Sp. z o.o. The full notice is retained in [licenses/spree-MIT.txt](licenses/spree-MIT.txt). Erogine's server pricing, ownership, order storage and capture verification are new code; the rest of Spree's commerce system was not imported.
+
+Runtime dependencies retain their own package licenses. The lockfile records the versions. The official `@paypal/react-paypal-js` SDK is Apache-2.0 licensed; it is consumed as a dependency rather than relicensed under MIT. Its root exports use the supported JavaScript SDK v5 integration; SDK v6 has separate exports and can be a later migration.

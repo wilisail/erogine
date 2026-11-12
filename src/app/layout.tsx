@@ -11,8 +11,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <div className="announcement">A little curiosity goes a long way.<span>Sandbox preview · no real purchases</span></div>
     <header className="site-header container">
       <Link href="/" className="wordmark" aria-label="Erogine home"><span className="brand-mark" aria-hidden="true">e</span>erogine<span className="brand-dot">.</span></Link>
-      <nav aria-label="Main navigation"><Link href="/">Discover</Link><Link href="/account">My account</Link></nav>
-      <Link href={session ? '/account' : '/login'} className="header-action">{session ? session.user.name.split(' ')[0] : 'Sign in'}<span aria-hidden="true">↗</span></Link>
+      <nav aria-label="Main navigation"><Link href="/">Discover</Link><Link href="/checkout">Shop</Link><Link href="/account">My account</Link></nav>
+      <Link href={session ? '/account' : '/login'} className="header-action">{session ? session.user.name.split(' ')[0] : 'Sign in'}<span aria-hidden="true">→</span></Link>
     </header>
     <main>{children}</main>
     <footer className="container site-footer"><Link href="/" className="footer-brand">erogine.</Link><p>Small finds. Lasting joy.</p><span>Made for the curious.</span></footer>
