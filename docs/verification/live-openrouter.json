@@ -1,0 +1,67 @@
+{
+  "base": "https://erogine-murexp9gc-andor2.vercel.app",
+  "checks": [
+    {
+      "check": "full shop is available",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "reset page retained",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "temporary shopper registration",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "authenticated PayPal configuration retained",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "PayPal client configuration present",
+      "passed": true
+    },
+    {
+      "check": "real OpenRouter gift-finder request",
+      "status": 200,
+      "passed": true
+    },
+    {
+      "check": "AI returns unique real catalogue products within USD 35 with reasons",
+      "passed": true
+    }
+  ],
+  "applicationCommit": "9b6d903c811b039c370f6fff7e3e3c750ca04bcc",
+  "preview": "https://erogine-preview-andor2.vercel.app/shop",
+  "provider": "OpenRouter",
+  "requestedModel": "openrouter/free",
+  "interests": "space and building",
+  "maxBudgetCentsPerItem": 3500,
+  "source": "ai",
+  "recommendations": [
+    {
+      "product": "Moon Mission Kit",
+      "priceCents": 3200
+    },
+    {
+      "product": "Little City Blocks",
+      "priceCents": 2400
+    },
+    {
+      "product": "Tiny Robot",
+      "priceCents": 2800
+    }
+  ],
+  "aiUnitTestsPassed": 8,
+  "initialUpstreamFailures": {
+    "attempts": 2,
+    "status": 400,
+    "cause": "Not established; same configuration later passed"
+  },
+  "uiAddToCartCheck": "Pending owner browser confirmation",
+  "testUsersCleanedUp": true
+}
