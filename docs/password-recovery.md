@@ -15,4 +15,5 @@ An authenticated operator issues a link only after an owner requests recovery.
 - A normal sign-in is required afterward. Never put raw tokens, passwords or
   provider credentials in source control or test evidence.
 
-Apply `database/003_password_recovery.sql` before deploying this feature.
+Apply `database/003_password_recovery.sql`, then
+`database/004_password_recovery_access.sql` before deploying this feature.
