@@ -59,7 +59,14 @@ export function createOpenRouterGateway(options: { apiKey: string; model: string
     }
     if (response.status === 429) throw new HttpError(429, 'AI_RATE_LIMITED', 'The free model is busy. Please wait a little and try again.')
     if (!response.ok) {
-      console.warn('erogine.ai.http_error', { status: response.status, model: options.model })
+      let detail = 'No provider message'
+      try {
+        const body = await response.json()
+        if (typeof body?.error?.message === 'string') detail = body.error.message
+          .replaceAll(options.apiKey, '[redacted key]').replaceAll(input.interests, '[redacted interests]')
+          .replace(/sk-[A-Za-z0-9_-]{8,}/g, '[redacted key]').slice(0, 400)
+      } catch { /* Never log provider bodies, headers or credentials. */ }
+      console.warn('erogine.ai.http_error', { status: response.status, model: options.model, detail })
       throw unavailable()
     }
     try {
