@@ -1,0 +1,150 @@
+{
+  "date": "2026-11-12",
+  "preview": "https://erogine-preview-andor2.vercel.app/shop",
+  "applicationCommit": "537629dfe9ef9fb6fff9449ffac38bf043280c42",
+  "deploymentId": "dpl_D6JpjFemMWVGY4bcxj8Bjo6hzuDP",
+  "deploymentUrl": "https://erogine-dak6ck49a-andor2.vercel.app",
+  "deploymentTarget": "Preview",
+  "unitTests": {
+    "passed": 40,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "hostedBuild": "READY",
+  "productionDependencyAudit": {
+    "knownVulnerabilities": 0
+  },
+  "securityAdvisors": {
+    "lints": 0
+  },
+  "hostedChecks": {
+    "applicationCommit": "9b6d903c811b039c370f6fff7e3e3c750ca04bcc",
+    "auth": 26,
+    "release": 63,
+    "checks": [
+      "database health",
+      "public catalogue",
+      "all eight catalogue products render",
+      "AI connection enabled",
+      "product detail orbit-city-cruiser",
+      "product detail little-city-blocks",
+      "product detail pocket-puzzle",
+      "product detail moon-mission-kit",
+      "product detail moss-bear",
+      "product detail tiny-robot",
+      "product detail story-starter-cards",
+      "product detail balance-garden",
+      "unknown product rejected",
+      "cart page",
+      "anonymous checkout redirect",
+      "anonymous provider config rejected",
+      "anonymous order create rejected",
+      "QA registration 1",
+      "QA registration 2",
+      "authenticated provider config",
+      "sandbox configured with public client ID only",
+      "cross-origin payment guard",
+      "application header guard",
+      "payment CSRF guard",
+      "client total rejected",
+      "client unit price rejected",
+      "zero quantity rejected",
+      "excess quantity rejected",
+      "duplicate SKU rejected",
+      "unknown SKU rejected",
+      "real sandbox order created without approval",
+      "server fixes currency, amount, price and unpaid state",
+      "same checkout retried safely",
+      "checkout retry reuses local and PayPal order",
+      "changed cart requires a new checkout key",
+      "anonymous receipt rejected",
+      "other customer receipt rejected",
+      "other customer receipt page rejected",
+      "invalid order ID rejected",
+      "other customer capture rejected",
+      "other customer cancel rejected",
+      "other customer reconcile rejected",
+      "client provider ID rejected",
+      "capture requires buyer approval",
+      "real sandbox unpaid reconciliation",
+      "unapproved order remains unpaid",
+      "owner receipt page",
+      "receipt never invents payment",
+      "real sandbox unpaid cancellation",
+      "cancellation saved without capture",
+      "cancellation is idempotent",
+      "canceled order cannot be paid",
+      "canceled receipt reload",
+      "canceled status persists",
+      "account history",
+      "anonymous AI rejected",
+      "AI origin guard",
+      "AI CSRF guard",
+      "client model override rejected",
+      "AI budget upper bound",
+      "no affordable product handled locally",
+      "empty response labelled catalogue",
+      "CSRF belongs to active session"
+    ],
+    "serverCodeUnchangedInBudgetRelease": true
+  },
+  "newBuildSmoke": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "database": "connected",
+      "payments": "sandbox-configured",
+      "ai": "configured"
+    },
+    {
+      "path": "/shop",
+      "status": 200,
+      "typedBudgetHelp": true
+    },
+    {
+      "path": "/reset-password",
+      "status": 200
+    },
+    {
+      "path": "/api/auth/session",
+      "status": 401
+    }
+  ],
+  "browserChecks": {
+    "typedDollarBudget": "$24.50",
+    "cartProduct": "Moss Bear",
+    "cartTotalCents": 2200,
+    "persistedAfterReload": true,
+    "testCartCleared": true
+  },
+  "sandboxReleaseOrder": {
+    "approved": false,
+    "captured": false,
+    "finalStatus": "CANCELED",
+    "retryReusedOrder": true
+  },
+  "cleanup": {
+    "remainingQaUsers": 0,
+    "remainingQaOrders": 0,
+    "originalOwnerOrderStatus": "PAID"
+  },
+  "sourceReview": {
+    "currentSourceSecretPatternFindings": 0,
+    "allowedPlaceholder": "prisma.config.ts loopback build_only database URL",
+    "repositoryVisibility": "private",
+    "mitLicense": true,
+    "spreeLicenseNoticePresent": true
+  },
+  "pending": [
+    "Owner adds an AI recommendation to the cart",
+    "Owner verifies PayPal popup cancellation callback",
+    "Record continuous AI-to-payment journey and receipt reload",
+    "Publish repository",
+    "Upload public YouTube video under three minutes",
+    "Submit Devpost entry"
+  ],
+  "deferred": [
+    "Replace illustrations with appropriately licensed photographs",
+    "Broader OpenRouter experiments"
+  ]
+}

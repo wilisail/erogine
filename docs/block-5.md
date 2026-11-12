@@ -1,35 +1,39 @@
-# Block 5 — automated integration and release checks
+# Block 5 — release verification
 
-Story: a shopper explores Erogine's real catalogue, gets AI gift suggestions, adds chosen items to the persistent cart, signs in, approves PayPal sandbox payment, and receives a private receipt after server verification.
+Current Preview: https://erogine-preview-andor2.vercel.app/shop
 
-## Evidence available before provider setup
+## 12 November 2026 release checkpoint
 
-- 38 unit tests passed: 14 auth, 14 payment, two cart and eight AI tests.
-- TypeScript checks and the production build passed.
-- `npm audit --omit=dev` reported zero known vulnerabilities in the production dependency tree at this checkpoint. This is a point-in-time audit, not a guarantee of absence of vulnerabilities.
-- Git whitespace validation passed. React review covered stable component definitions, labelled controls, keyboard quantity editing, versioned browser storage, safe rendering of model text and lazy PayPal SDK loading.
-- Hosted and browser checks are recorded below after deployment. Provider success responses in unit tests are controlled fixtures, not real external transactions.
+- **40 unit tests passed**: auth/session, server quotes and payment lifecycle, cart, AI response boundaries and typed-budget parsing.
+- **26 hosted authentication checks passed** against the configured stable Preview.
+- **63 configured-provider release checks passed** against the configured stable Preview: full catalogue, private receipts, CSRF/origin guards, trusted server prices, invalid cart rejection, duplicate checkout reuse, cart-change conflicts, unapproved capture rejection, real PayPal sandbox order creation/reconciliation/cancellation and AI input boundaries.
+- The automated PayPal order was never approved or captured. It was saved as CANCELED with no capture identifier. The owner's separate USD 18 PAID order remains separate.
+- TypeScript checks passed. The hosted build containing the budget fix is READY.
+- Production dependency audit: zero known vulnerabilities at this checkpoint.
+- Browser check on the new build accepted typed `$24.50`. The parser also accepts `24`, `24.50`, `USD 24.50` and decimal commas; invalid or out-of-range input gets a clear error instead of silently changing the amount.
+- Browser cart check: add Moss Bear, confirm USD 22, reload and retain the item/quantity/total, then remove it and confirm empty. The browser test cart was cleared.
 
-## Pending user-dependent boundaries
+The 26 + 63 hosted checks ran before the budget-only client change, on application commit `9b6d903c811b039c370f6fff7e3e3c750ca04bcc`. Server code is unchanged in this release. The new build passed the four post-deploy HTTP checks and browser budget/cart checks described above. All three disposable QA accounts and the canceled QA order were removed; database counts returned zero and the owner's original order remained PAID.
 
-| Boundary | Why it is pending |
-| --- | --- |
-| OpenRouter → real model → recommendation cards | User's OpenRouter key is not configured |
-| PayPal popup → buyer approval → real sandbox capture | Sandbox REST credentials and buyer approval are not available |
-| Public repository and submission video | User will complete release setup and recording together |
+Running application commit: `537629dfe9ef9fb6fff9449ffac38bf043280c42`.
+Release deployment: `erogine-dak6ck49a-andor2.vercel.app` (Preview).
+Machine-readable checkpoint: [verification/final-release.json](verification/final-release.json).
 
-There is no mock-success API route in the deployed app. Absent keys result in setup notices and safe API errors. The full combined user checklist is `docs/manual-test-handoff.md`.
+## External-provider evidence
 
-## Hosted/browser checkpoint
+The owner completed an actual PayPal sandbox approval/capture for USD 18. A private receipt displayed PAID, and the database held the completed capture. Real OpenRouter requests returned catalogue products with reasons. The owner's browser screenshot also showed `soft toy` recommendations within USD 24 per item. These observations are distinct from injected unit-test fixtures.
 
-Completed against Preview https://erogine-nfyrgqmx1-andor2.vercel.app/shop from source commit `bf05f7a1aa1c3ac265463d5c0d2ebcefdd175a96` (Vercel target `staging` / Preview).
+The first live OpenRouter checks received upstream HTTP 400 responses before the same configuration later worked. No exact root cause was established. Free-provider reliability and compatibility can vary.
 
-- **77 hosted HTTP checks passed**: 26 authentication checks plus 51 catalogue/payment/AI-boundary checks. These exercised the actual hosted app and its private PostgreSQL tables. Absent provider credentials failed closed; no real AI inference or PayPal transaction was performed.
-- Browser interaction verified all eight products; search, combined filters, empty results/reset; product details; quantity selection; the USD 48 mixed cart; refresh persistence; USD 66 quantity recalculation; removal to USD 36 and then empty; and checkout routing to `/login?next=/checkout` with the cart retained.
-- Browser sign-in completion stays in the user's deferred session. No credentials were entered in browser QA. Mobile viewport behavior has not been browser-tested.
-- No application console error was observed. The browser extension emitted unrelated metadata errors.
-- Three generated example.test accounts and two unpaid fixtures were removed. Follow-up database counts confirmed zero remaining QA users/orders, auth sessions or refresh tokens, and no extra orders.
-- Browser cart fixtures were cleared. A storefront screenshot is saved in `screenshots/storefront.jpg`; it contains no account or payment information.
-- Machine-readable evidence: [verification/block-5.json](verification/block-5.json).
+## Remaining user checks and submission
 
-Only notes and test evidence were added after this deployment; the running application source matches the recorded commit. Use the latest Preview URL returned after adding credentials and redeploying.
+1. In the final browser session, add an AI recommendation to the cart and confirm the amount.
+2. Briefly cancel a new PayPal popup and confirm the order does not show PAID and the cart remains available. The cancellation API already passed automated checks; this verifies the popup callback.
+3. Record the continuous AI → cart → sandbox approval/capture → PAID receipt flow; reload the receipt and show My account. This can be the submission video.
+4. Make the repository public with MIT/source notices retained, upload a public YouTube video under three minutes and submit the demo, repository, video and description on Devpost.
+
+Public repository publication, final video and final submission are still pending. Photo replacement and broader AI experiments are deferred.
+
+## Earlier checkpoint
+
+Before credentials were configured, 38 unit tests and 77 hosted checks passed. The earlier evidence remains in [verification/block-5.json](verification/block-5.json). That checkpoint specifically tested missing-provider configuration and did not establish real provider success. `scripts/verify-payments.ts` belongs to that earlier mode; `scripts/verify-release.ts` checks configured sandbox providers.

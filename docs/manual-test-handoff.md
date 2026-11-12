@@ -1,52 +1,41 @@
-# Setup and shopper verification — Blocks 1–5
+# Current shopper and submission checklist — Blocks 1–5
 
-Current verified Preview: https://erogine-preview-andor2.vercel.app/shop . This stable Preview alias points to the complete storefront. The older account-only deployments have no `/shop` route; do not use them for checkout or AI testing. Keep Production unchanged during these checks.
+Use the stable Preview: https://erogine-preview-andor2.vercel.app/shop . The full app is here; earlier account-only deployment URLs are obsolete. Production is unchanged.
 
-## Latest checkpoint — 12 November 2026
+## Status — 12 November 2026
 
-| Block | Evidence | Remaining user check |
+| Round | Confirmed evidence | Remaining |
 | --- | --- | --- |
-| 1 — Auth | Registration and sign-out/sign-in reported successful. Operator-assisted password recovery was implemented, passed 14 hosted checks and was successfully used by the owner. | None for the basic account flow. |
-| 2 — PayPal | Owner completed a real PayPal sandbox approval/capture. Stored order is PAID for one Orbit City Cruiser, USD 18; order/capture identifiers are populated. | Separate cancellation test; reload receipt and compare with sandbox transaction history. |
-| 3 — Cart | Owner added two SKUs, removed a SKU and reduced quantity; checkout amount matched. Earlier automated browser checks covered search, filters, quantities, empty state and refresh persistence. | Quick refresh-persistence confirmation in the final shopper session. |
-| 4 — AI | Preview credentials are saved. A real `openrouter/free` request returned three catalogue products under USD 35 with reasons. See `verification/live-openrouter.json`. | Use Gift finder in the browser and add one recommendation to the cart. |
-| 5 — Release | Build and auth/payment/AI boundary checks have passed. | Finish the combined journey, public repository, public YouTube demo and Devpost submission. |
+| 1 — Account | Registration, sign-in and password recovery worked; 26 hosted auth checks passed. | None for the basic flow. |
+| 2 — PayPal | Actual USD 18 sandbox capture and PAID receipt. Release checks also created, reconciled and canceled an unapproved sandbox order. | Quick popup-cancel check and receipt reload in the final session. |
+| 3 — Cart | Owner tested two SKUs, removal, quantity reduction and correct total. Automated browser check confirmed refresh persistence on the release build. | None for these cart mechanics. |
+| 4 — AI | Real OpenRouter API and owner browser recommendations worked. `soft toy` with USD 24 returned products within budget. Budget typing fixed and checked with `$24.50`. | Add a recommendation to the cart during the recorded journey. |
+| 5 — Release | 40 unit, 26 hosted auth and 63 hosted release checks passed; build/typecheck passed; audit found zero known production vulnerabilities. | Final browser checks, public repo, public YouTube demo and Devpost submission. |
 
-The first two live AI checks received an upstream HTTP 400; the same request configuration subsequently succeeded. No exact cause for those earlier upstream responses was established. Diagnostics redact the API key and interests. Free-provider availability and compatibility can vary; do not claim uninterrupted reliability.
+## Final quick check — about 3–5 minutes
 
-## Saved Preview configuration
+1. Sign in to the stable Preview with the **Erogine shopper account**. Use the gift finder: interests `soft toy`, type `24` for USD per item; request picks.
+2. Add one recommendation; confirm its price and cart total.
+3. Start a PayPal checkout, then cancel/close that new popup. Confirm no PAID receipt appears and the cart remains. Do not cancel or pay the earlier completed order.
+4. If an order is PROCESSING, check that existing order instead of starting another payment.
 
-These are already configured. Do not paste provider secrets into chat or source control.
+Then record the complete AI → cart → successful sandbox payment → PAID receipt → reload/My account flow. The recording can double as the final end-to-end test.
 
-| Variable | Value/source |
-| --- | --- |
-| `PAYPAL_CLIENT_ID` | Sandbox REST app associated with the sandbox Business seller |
-| `PAYPAL_CLIENT_SECRET` | Same app; Secret |
-| `PAYPAL_ENVIRONMENT` | `sandbox` |
-| `OPENROUTER_API_KEY` | API key created in the owner's OpenRouter account; Secret |
-| `OPENROUTER_MODEL` | `openrouter/free` |
+## Account and environment reminders
 
-Keep the existing `DATABASE_URL`, `AUTH_JWT_SECRET` and other auth/database settings. Redeploy the complete checked-in application to Preview after changing configuration. Only move the stable alias after verifying the full shop, auth and required provider flow. Re-deploying an old account-only build does not add storefront features.
+PayPal Sandbox Personal buyer credentials are separate from the Erogine shopper login and the real PayPal Developer login. Use the virtual buyer in the popup.
 
-PayPal's Sandbox Personal buyer email/password are separate from the Erogine shopper login and the real Developer Dashboard login. Use the virtual Personal buyer in the payment popup. No real funds or shipping are involved.
+Preview already has `DATABASE_URL`, `AUTH_JWT_SECRET`, `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_ENVIRONMENT=sandbox`, `OPENROUTER_API_KEY` and `OPENROUTER_MODEL=openrouter/free`. No additional key or redeploy is needed now. The application accepts only free model configuration; no paid fallback is enabled. The underlying model chosen by OpenRouter's free router can vary.
 
-## Finish Round 4
+Early upstream OpenRouter HTTP 400 errors were followed by successful calls without an established root cause. Free-provider capacity can vary.
 
-1. Open the current Preview and sign in using the existing Erogine account.
-2. In Gift finder, enter `space and building`, budget USD 35 per item.
-3. Request picks. Expect up to three real catalogue products, each within the per-item budget, with relevant reasons.
-4. Add a recommendation to the cart and confirm its price/quantity.
+## Submit
 
-The verified API response selected Moon Mission Kit (USD 32), Little City Blocks (USD 24) and Tiny Robot (USD 28). Future free-router responses may choose different valid alternatives.
+1. Use https://github.com/wilisail/erogine/settings to change repository visibility from Private to Public. Keep the MIT license and third-party notices. Publishing the repo is still the owner's action.
+2. Follow the approximately two-minute outline in [submission-draft.md](submission-draft.md). Upload the video as **Public**, **under three minutes**, and check it opens while signed out.
+3. On https://paypalaihackathon.devpost.com/ submit the project description, working demo URL, public repo and public YouTube link. Open the demo and repo signed out to check access.
+4. Final submission is not complete until Devpost confirms it.
 
-## Final shopper and submission session
+Deadline: **13 November 2026, 03:00 WIB** (12 November, noon PST). Source: https://paypalaihackathon.devpost.com/rules .
 
-- Refresh the cart and confirm persistence.
-- Reload the existing PAID receipt; compare its total and identifiers with the PayPal sandbox dashboard. Do not pay that order again.
-- Start a separate checkout and cancel the PayPal popup. Confirm it does not become PAID and the cart remains available. Cancellation is not a refund; refunds are outside this demo.
-- If an order is PROCESSING, check that existing order rather than starting another payment.
-- Make `wilisail/erogine` public while retaining its MIT license and third-party notices. Git automatic deployment is not connected; previews have been deployed directly from the checked-in source.
-- Record the actual AI → cart → PayPal approval/capture → receipt journey. Keep secrets out of the recording.
-- Upload a publicly visible YouTube video under three minutes; submit its link, the public repository, working demo and the description from `submission-draft.md` to https://paypalaihackathon.devpost.com/ .
-
-Official deadline: 12 November 2026, noon PST — 13 November, 03:00 WIB. The remaining UI confirmation and submission work are not yet complete.
+Images and further AI experimentation are optional follow-up work; they do not hold up this payment-learning submission.

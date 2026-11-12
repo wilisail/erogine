@@ -63,5 +63,16 @@
     "cause": "Not established; same configuration later passed"
   },
   "uiAddToCartCheck": "Pending owner browser confirmation",
-  "testUsersCleanedUp": true
+  "testUsersCleanedUp": true,
+  "ownerBrowserCheck": {
+    "interests": "soft toy",
+    "maxBudgetCentsPerItem": 2400,
+    "products": [
+      "Moss Bear",
+      "Orbit City Cruiser",
+      "Little City Blocks"
+    ],
+    "result": "Recommendation cards observed by owner",
+    "uiAddToCart": "Pending final recorded journey"
+  }
 }
