@@ -2,6 +2,8 @@
 
 Automated work continues without these steps. Complete this sequence when ready; no account creation, secret sharing or buyer approval is needed from you during the automated phase. Never paste provider secrets into chat.
 
+Current verified Preview: https://erogine-nfyrgqmx1-andor2.vercel.app/shop . The address may change after redeploying with credentials.
+
 ## 1. Configure both providers together
 
 Use the existing Erogine project in the ANDOR / `andor2` Vercel workspace. Keep the database/auth variables already configured for **Preview**. Add the following variables to **Preview**, then redeploy the latest Preview once. Use the resulting Preview URL for testing; do not switch to the earlier Production deployment.

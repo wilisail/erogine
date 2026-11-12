@@ -8,6 +8,12 @@ Implemented: an eight-product shop with search, filters and detail pages, persis
 
 Stack: Next.js 16, React 19, TypeScript, Prisma 7, Supabase PostgreSQL and Vercel. One application; no separate Express deployment or AI framework. The auth core is reused from the owner's TemuEvent Feature 2; small UI components are adapted from Spree's MIT storefront. See [source notices](THIRD_PARTY_NOTICES.md), [Block 1](docs/block-1.md), [payment companion](docs/block-2.md), [storefront](docs/block-3.md), [AI](docs/block-4.md), [release checks](docs/block-5.md) and the [combined manual setup/testing handoff](docs/manual-test-handoff.md).
 
+## Verified preview
+
+https://erogine-nfyrgqmx1-andor2.vercel.app/shop
+
+Automated checkpoint: 38 unit tests and 77 hosted checks passed; production dependency audit reported zero known vulnerabilities. Actual OpenRouter inference and PayPal sandbox approval/capture remain pending setup. See the [combined handoff](docs/manual-test-handoff.md).
+
 ## Run
 
 Use Node.js 22.12 or newer.
