@@ -52,14 +52,25 @@ export function createOpenRouterGateway(options: { apiKey: string; model: string
           } } },
         } } },
       }) })
-    } catch { throw unavailable() }
+    } catch (error) {
+      const category = error instanceof Error && ['TimeoutError', 'AbortError', 'TypeError'].includes(error.name) ? error.name : 'network'
+      console.warn('erogine.ai.request_failed', { category, model: options.model })
+      throw unavailable()
+    }
     if (response.status === 429) throw new HttpError(429, 'AI_RATE_LIMITED', 'The free model is busy. Please wait a little and try again.')
-    if (!response.ok) throw unavailable()
+    if (!response.ok) {
+      console.warn('erogine.ai.http_error', { status: response.status, model: options.model })
+      throw unavailable()
+    }
     try {
       const text = await response.text()
       if (text.length > 65536) throw unavailable()
       const data = JSON.parse(text), choice = data.choices?.[0]
-      if (data.error || choice?.error || choice?.finish_reason !== 'stop' || typeof choice?.message?.content !== 'string' || choice.message.content.length > 4000) throw unavailable()
+      if (data.error || choice?.error || choice?.finish_reason !== 'stop' || typeof choice?.message?.content !== 'string' || choice.message.content.length > 4000) {
+        const finishReason = ['stop', 'length', 'error', 'content_filter', 'tool_calls'].includes(choice?.finish_reason) ? choice.finish_reason : 'other'
+        console.warn('erogine.ai.incomplete_response', { model: options.model, finishReason, providerError: Boolean(data.error || choice?.error) })
+        throw unavailable()
+      }
       return JSON.parse(choice.message.content)
     } catch { throw unavailable() }
   }
@@ -89,3 +100,4 @@ export async function limitedRecommendations(userId: string, input: unknown) {
   active++
   try { return await configuredRecommender()(input) } finally { active-- }
 }
+
