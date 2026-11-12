@@ -22,3 +22,7 @@ Block 3 also adapts Spree's product-card composition and editable quantity-picke
 Their source notices are retained in the adapted files. Erogine's cart storage and small static catalogue are new code.
 
 Runtime dependencies retain their own package licenses. The lockfile records the versions. The official `@paypal/react-paypal-js` SDK is Apache-2.0 licensed; it is consumed as a dependency rather than relicensed under MIT. Its root exports use the supported JavaScript SDK v5 integration; SDK v6 has separate exports and can be a later migration.
+
+## Catalogue images
+
+The eight catalogue images were supplied by the project owner on 12 November 2026 for their matching Erogine SKUs. WebP copies in `public/images/products/` preserve the supplied composition; responsive image delivery is handled by Next.js. These files are owner-supplied assets, not images sourced from Spree.

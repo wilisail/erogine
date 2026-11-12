@@ -67,6 +67,6 @@ Vercel uses `npm ci` and `npm run build`. The shared demo uses Preview configura
 
 ## Limits
 
-Sandbox only. No fulfillment, refunds, verified webhooks or live-money mode. Free-provider capacity and schema compatibility can vary; early upstream HTTP 400 responses were followed by successful calls without an established root cause. Rate guards are per instance rather than a distributed quota. Existing illustrations are used for this small demo; photo replacement and broader AI experimentation are deferred.
+Sandbox only. No fulfillment, refunds, verified webhooks or live-money mode. Free-provider capacity and schema compatibility can vary; early upstream HTTP 400 responses were followed by successful calls without an established root cause. Rate guards are per instance rather than a distributed quota. The eight catalogue photos were supplied by the project owner and are served locally as responsive WebP assets. Broader AI experimentation is deferred.
 
 MIT licensed; retain source notices.
