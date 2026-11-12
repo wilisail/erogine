@@ -69,7 +69,11 @@ The hackathon requires meaningful PayPal and AI use, a runnable demo, public ope
 
 - 28 unit tests passed, including 14 payment tests with injected provider responses and 14 existing auth tests.
 - TypeScript checks and the production build passed.
-- Hosted payment-boundary checks and their results will be recorded after deploying this round.
+- 29 hosted payment-boundary checks passed against the actual Preview deployment: authenticated configuration, private owner receipts, anonymous/foreign access denial, invalid IDs, strict action bodies, origin/application/CSRF guards, protected checkout rendering and fail-closed behavior without PayPal credentials.
+- Two generated example.test accounts and two unpaid fixtures were removed. Database verification confirmed zero remaining QA users, orders or sessions and no extra orders created by disabled checkout.
+- All five Erogine tables retain RLS; the runtime role can read no tables in TemuEvent's public schema and has neither superuser nor BYPASSRLS privileges.
+- Verified Preview: https://erogine-izk7da32z-andor2.vercel.app/ (Vercel target `staging` / Preview). Source code: commit `3ac11d23000ca770f3f956b8c90e8f05f496429d`.
+- Checkpoint completed 12 November 2026, approximately 08:42 WIB. The Preview was deployed directly from these source files; Git automatic deployment access still needs connecting.
 - Real PayPal sandbox transaction: pending credentials and buyer approval.
 
 ## Official references
