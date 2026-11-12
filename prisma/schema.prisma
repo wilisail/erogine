@@ -15,6 +15,7 @@ model User {
   passwordHash String        @map("password_hash")
   createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   sessions     AuthSession[]
+  passwordResets AuthPasswordReset[]
   orders       Order[]
 
   @@map("users")
@@ -46,6 +47,20 @@ model AuthRefreshToken {
 
   @@index([sessionId])
   @@map("auth_refresh_tokens")
+  @@schema("erogine")
+}
+
+model AuthPasswordReset {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  tokenHash  String    @unique @map("token_hash") @db.Char(64)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
+  consumedAt DateTime? @map("consumed_at") @db.Timestamptz(6)
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("auth_password_resets")
   @@schema("erogine")
 }
 
@@ -82,3 +97,4 @@ model OrderItem {
   @@map("order_items")
   @@schema("erogine")
 }
+
