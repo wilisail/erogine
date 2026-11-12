@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { randomBytes, randomUUID } from 'node:crypto'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { products } from '../src/lib/catalogue'
 
 // HTTP checks only; no database administration or fake provider routes.
 // --prepare creates two disposable accounts. An administrator seeds two unpaid
@@ -40,6 +41,14 @@ try {
     assert.equal(state.base, base, 'Use the same preview as --prepare.')
     assert.equal(state.accounts.length, 2, 'Run --prepare and seed the unpaid fixtures first.')
     const [owner, other] = state.accounts
+    const shop = await request('/shop')
+    expect(shop, 200, 'public catalogue renders')
+    assert(products.every(product => shop.text.includes(product.title))); checks.push('all eight catalogue products appear')
+    assert(shop.text.includes('AI connection is being prepared')); checks.push('AI setup state is honest')
+    const detailPages = await Promise.all(products.map(product => request('/products/' + product.id)))
+    detailPages.forEach((page, index) => { expect(page, 200, 'product detail ' + products[index].id); assert(page.text.includes(products[index].title)) })
+    expect(await request('/products/unknown-product'), 404, 'unknown product rejected')
+    expect(await request('/cart'), 200, 'public cart shell renders')
     expect(await request('/api/health'), 200, 'hosted database health')
     expect(await request('/checkout'), 307, 'anonymous checkout redirect')
     expect(await request('/api/payments/config'), 401, 'anonymous configuration rejected')
@@ -69,6 +78,18 @@ try {
     expect(await request('/api/payments/orders/' + owner.orderId + '/capture', owner, { method: 'POST', body: { paypalOrderId: 'injected' } }), 400, 'client provider ID rejected')
     expect(await request('/api/payments/orders/' + owner.orderId + '/invalid', owner, { method: 'POST', body: {} }), 404, 'unknown payment action rejected')
     expect(await request('/account', owner), 200, 'order history renders')
+    const aiInput = { interests: 'wooden desk toys', maxBudgetCents: 2500 }
+    expect(await request('/api/recommendations', undefined, { method: 'POST', body: aiInput }), 401, 'anonymous AI request rejected')
+    expect(await request('/api/recommendations', owner, { method: 'POST', body: aiInput, headers: { origin: 'https://other.example.test' } }), 403, 'cross-origin AI request rejected')
+    expect(await request('/api/recommendations', owner, { method: 'POST', body: aiInput, headers: { 'x-csrf-token': 'wrong' } }), 403, 'AI CSRF guard')
+    expect(await request('/api/recommendations', owner, { method: 'POST', body: { ...aiInput, model: 'paid/override' } }), 400, 'client model override rejected')
+    const aiMissing = await request('/api/recommendations', owner, { method: 'POST', body: aiInput })
+    expect(aiMissing, 503, 'missing AI key fails closed'); assert.equal(aiMissing.data.code, 'AI_NOT_CONFIGURED'); checks.push('no simulated AI recommendations')
+    const noAffordable = await request('/api/recommendations', owner, { method: 'POST', body: { ...aiInput, maxBudgetCents: 100 } })
+    expect(noAffordable, 200, 'empty budget handled without AI'); assert.deepEqual(noAffordable.data, { source: 'catalogue', recommendations: [] }); checks.push('empty result labelled as catalogue')
+    const refreshCookie = Object.keys(owner.jar).find(name => name.endsWith('erogine_refresh'))!
+    const mismatched = { ...owner, csrf: other.csrf, jar: { ...owner.jar, [refreshCookie]: other.jar[refreshCookie] } }
+    expect(await request('/api/recommendations', mismatched, { method: 'POST', body: aiInput }), 403, 'CSRF secret must belong to the active session')
     console.log(`PASS: ${checks.length} hosted payment-boundary checks (no PayPal sandbox transaction performed).`)
   }
 } catch (error) { console.error(error instanceof Error ? error.message : 'Payment verification failed'); process.exitCode = 1 }

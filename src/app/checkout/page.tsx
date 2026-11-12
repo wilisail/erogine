@@ -6,7 +6,8 @@ import { CheckoutClient } from '@/components/checkout-client'
 export const metadata: Metadata = { title: 'Sandbox checkout' }
 export const dynamic = 'force-dynamic'
 export default async function Checkout() {
-  if (!await currentSession()) redirect('/login')
+  const session = await currentSession()
+  if (!session) redirect('/login?next=/checkout')
   const config = paypalConfig()
-  return <CheckoutClient clientId={config.configured ? config.clientId! : null} />
+  return <CheckoutClient userId={session.user.id} clientId={config.configured ? config.clientId! : null} />
 }

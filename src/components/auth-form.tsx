@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
-export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
+export function AuthForm({ mode, next = '/account' }: { mode: 'login' | 'register'; next?: '/account' | '/checkout' | '/shop' }) {
   const router = useRouter()
   const registering = mode === 'register'
   const [busy, setBusy] = useState(false)
@@ -19,7 +19,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
       const response = await fetch(`/api/auth/${mode}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-erogine-client': 'web' }, body: JSON.stringify(body) })
       const data = await response.json()
       if (!response.ok) throw new Error(data.message || 'Please try again shortly.')
-      router.replace('/account')
+      router.replace(next)
       router.refresh()
     } catch (problem) { setError(problem instanceof Error ? problem.message : 'Unable to connect. Please try again.') }
     finally { setBusy(false) }
@@ -30,7 +30,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'register' }) {
     <label>Password<input name="password" type="password" autoComplete={registering ? 'new-password' : 'current-password'} minLength={registering ? 15 : 1} maxLength={128} required aria-describedby={registering ? 'password-help' : undefined} /></label>
     {registering && <p className="field-note" id="password-help">Use at least 15 characters. A short passphrase works well.</p>}
     {error && <p className="error-message" role="alert">{error}</p>}
-    <button className="button primary full" type="submit" disabled={busy}>{busy ? 'One moment…' : registering ? 'Create your account' : 'Sign in'}<span aria-hidden="true">↗</span></button>
-    <p className="auth-switch">{registering ? 'Already part of the club? ' : 'New to Erogine? '}<Link href={registering ? '/login' : '/register'}>{registering ? 'Sign in' : 'Create an account'}</Link></p>
+    <button className="button primary full" type="submit" disabled={busy}>{busy ? 'One moment…' : registering ? 'Create your account' : 'Sign in'}<span aria-hidden="true">→</span></button>
+    <p className="auth-switch">{registering ? 'Already part of the club? ' : 'New to Erogine? '}<Link href={(registering ? '/login' : '/register') + (next === '/account' ? '' : '?next=' + next)}>{registering ? 'Sign in' : 'Create an account'}</Link></p>
   </form>
 }

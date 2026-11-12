@@ -15,4 +15,10 @@ https://github.com/spree/storefront/blob/63cf0dc0aec38d7c50adbc316da124d9908f27c
 
 Copyright (c) 2026 Vendo Connect Inc., Vendo Sp. z o.o. The full notice is retained in [licenses/spree-MIT.txt](licenses/spree-MIT.txt). Erogine's server pricing, ownership, order storage and capture verification are new code; the rest of Spree's commerce system was not imported.
 
+Block 3 also adapts Spree's product-card composition and editable quantity-picker behavior from the same pinned MIT source:
+- https://github.com/spree/storefront/blob/63cf0dc0aec38d7c50adbc316da124d9908f27ca/src/components/products/ProductCard.tsx
+- https://github.com/spree/storefront/blob/63cf0dc0aec38d7c50adbc316da124d9908f27ca/src/components/ui/quantity-picker.tsx
+
+Their source notices are retained in the adapted files. Erogine's cart storage and small static catalogue are new code.
+
 Runtime dependencies retain their own package licenses. The lockfile records the versions. The official `@paypal/react-paypal-js` SDK is Apache-2.0 licensed; it is consumed as a dependency rather than relicensed under MIT. Its root exports use the supported JavaScript SDK v5 integration; SDK v6 has separate exports and can be a later migration.

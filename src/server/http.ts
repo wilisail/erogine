@@ -1,9 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-
-export class HttpError extends Error {
-  constructor(public status: number, public code: string, message: string) { super(message) }
-}
+import { HttpError } from './errors'
+export { HttpError } from './errors'
 
 export function requireBrowserMutation(request: NextRequest) {
   const origin = request.headers.get('origin')
