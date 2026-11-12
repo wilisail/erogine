@@ -17,3 +17,16 @@ Passwords use the original bounded scrypt implementation. Access tokens last 15 
 | GET /api/health | Check hosted database |
 
 The order model uses integer cents and unique checkout, PayPal order and capture identifiers. Block 2 will add server-priced creation, buyer approval, verified capture, cancellation/retry handling and receipts. Provider-specific calls stay separate from order ownership and storage so a later Stripe exercise can reuse those boundaries.
+
+
+## Verified checkpoint — 12 November 2026, 08:10 WIB
+
+- 14 authentication unit tests, TypeScript checks and the production build passed.
+- 26 hosted checks passed, covering database connectivity, registration, duplicate email, invalid credentials, cookie flags, origin/CSRF guards, refresh rotation/replay, protected account rendering and logout revocation.
+- One generated example.test account was removed after testing; no real accounts were used.
+- Browser review confirmed the home and registration screens render consistently.
+- Preview: https://erogine-74udo268t-andor2.vercel.app/
+- Vercel project: `prj_8oCpqjy4KNvQ2NazNluLe6qy6K50`, team `andor2`. `DATABASE_URL` and `AUTH_JWT_SECRET` are Preview-only secrets. For this Vercel deployment API, target `staging` means Preview; omitting target created Production without those secrets. Use the verified Preview link.
+- Vercel does not yet have Git access to the private Erogine repository. This checkpoint was deployed from the same source files directly; enable repository access later for automatic Git deployments. The repository must become public before submission.
+- Direct database TCP/DNS is unavailable in this scratch runtime; the hosted application successfully connects with verified TLS. Keep the existing runtime role and CA setup.
+- AI/provider credentials remain deferred. Block 2 can proceed independently with PayPal sandbox access.
