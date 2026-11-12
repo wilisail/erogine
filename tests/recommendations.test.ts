@@ -52,7 +52,7 @@ test('one bounded free-router request separates user interests from instructions
     const headers = new Headers(init!.headers)
     assert.equal(headers.get('authorization'), 'Bearer test-only-key')
     const body = JSON.parse(String(init!.body))
-    assert.equal(body.model, 'openrouter/free'); assert.equal('models' in body, false); assert.equal(body.max_tokens, 650)
+    assert.equal(body.model, 'openrouter/free'); assert.equal('models' in body, false); assert.equal(body.max_tokens, 2048)
     assert.equal(body.response_format.type, 'json_schema'); assert.equal(body.provider.require_parameters, true)
     assert.equal(body.messages[0].role, 'system'); assert.equal(body.messages[1].role, 'user')
     const user = JSON.parse(body.messages[1].content)
@@ -73,6 +73,24 @@ test('provider failures and rate limits use safe errors without leaking internal
   }
   const gateway = createOpenRouterGateway({ apiKey: 'private-test-key', model: 'openrouter/free', fetch: async () => { throw new Error('private-network-detail') } })
   await assert.rejects(gateway(input, products), { code: 'AI_UNAVAILABLE' })
+})
+
+test('a reasoning-required provider can return a completed catalogue recommendation', async () => {
+  const gateway = createOpenRouterGateway({ apiKey: 'test-only-key', model: 'openrouter/free', fetch: async (_url, init) => {
+    const body = JSON.parse(String(init!.body))
+    if (body.reasoning?.effort === 'none' || body.reasoning?.enabled === false) {
+      return Response.json({ error: { message: 'Reasoning is mandatory for this endpoint and cannot be disabled.' } }, { status: 400 })
+    }
+    const enoughOutputBudget = body.max_tokens >= 2048
+    return Response.json({ choices: [{
+      finish_reason: enoughOutputBudget ? 'stop' : 'length',
+      message: { reasoning: 'Internal provider reasoning, never a product explanation.', content: enoughOutputBudget ? JSON.stringify(output) : '' },
+    }] })
+  } })
+  const result = await createRecommendationService(gateway)(input)
+  assert.equal(result.source, 'ai')
+  assert.equal(result.recommendations[0].product.id, 'orbit-city-cruiser')
+  assert.equal(JSON.stringify(result).includes('Internal provider reasoning'), false)
 })
 
 test('malformed, truncated and oversized provider output is rejected instead of rendered as recommendations', async () => {
