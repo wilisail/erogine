@@ -38,4 +38,4 @@ Early upstream OpenRouter HTTP 400 errors were followed by successful calls with
 
 Deadline: **13 November 2026, 03:00 WIB** (12 November, noon PST). Source: https://paypalaihackathon.devpost.com/rules .
 
-Images and further AI experimentation are optional follow-up work; they do not hold up this payment-learning submission.
+The eight catalogue images have now been replaced with the owner's supplied photos. Further AI experimentation is optional follow-up work; it does not hold up this payment-learning submission.

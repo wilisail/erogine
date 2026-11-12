@@ -1,0 +1,208 @@
+{
+  "date": "2026-11-12",
+  "applicationCommit": "84dce36441672415fcffc65b0a6f732ae53a5ceb",
+  "deploymentId": "dpl_4X8q3npsdtzb3X9MSTjBgkfgtv22",
+  "deploymentUrl": "https://erogine-495chjpw4-andor2.vercel.app",
+  "preview": "https://erogine-preview-andor2.vercel.app/shop",
+  "deploymentTarget": "Preview",
+  "build": "READY",
+  "typecheck": "passed",
+  "images": [
+    {
+      "source": "balance garden erogine.jpg",
+      "path": "public/images/products/balance-garden.webp",
+      "bytes": 86400,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "moss bear erogine.jpg",
+      "path": "public/images/products/moss-bear.webp",
+      "bytes": 124320,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "moon mission erogine.jpg",
+      "path": "public/images/products/moon-mission-kit.webp",
+      "bytes": 102602,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "pocket puzzle erogine.jpg",
+      "path": "public/images/products/pocket-puzzle.webp",
+      "bytes": 91914,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "little city blocks erogine.jpg",
+      "path": "public/images/products/little-city-blocks.webp",
+      "bytes": 121354,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "story card erogine.jpg",
+      "path": "public/images/products/story-starter-cards.webp",
+      "bytes": 101304,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "orbit city cruiser erogine.jpg",
+      "path": "public/images/products/orbit-city-cruiser.webp",
+      "bytes": 94094,
+      "width": 1408,
+      "height": 768
+    },
+    {
+      "source": "tiny robot erogine.jpg",
+      "path": "public/images/products/tiny-robot.webp",
+      "bytes": 116516,
+      "width": 1408,
+      "height": 768
+    }
+  ],
+  "httpChecks": [
+    {
+      "kind": "asset",
+      "path": "/images/products/balance-garden.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/balance-garden",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/moss-bear.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/moss-bear",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/moon-mission-kit.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/moon-mission-kit",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/pocket-puzzle.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/pocket-puzzle",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/little-city-blocks.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/little-city-blocks",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/story-starter-cards.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/story-starter-cards",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/orbit-city-cruiser.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/orbit-city-cruiser",
+      "status": 200
+    },
+    {
+      "kind": "asset",
+      "path": "/images/products/tiny-robot.webp",
+      "status": 200,
+      "matchesLocalAsset": true
+    },
+    {
+      "kind": "detail",
+      "path": "/products/tiny-robot",
+      "status": 200
+    },
+    {
+      "kind": "shop",
+      "path": "/shop",
+      "status": 200,
+      "skuImages": 8
+    },
+    {
+      "kind": "health",
+      "path": "/api/health",
+      "status": 200,
+      "servicesConfigured": true
+    },
+    {
+      "kind": "optimized",
+      "path": "/_next/image?url=%2Fimages%2Fproducts%2Fmoss-bear.webp&w=640&q=75",
+      "status": 200,
+      "imageFormat": "JPEG",
+      "width": 640,
+      "height": 349,
+      "bytes": 36104
+    },
+    {
+      "kind": "optimized",
+      "path": "/_next/image?url=%2Fimages%2Fproducts%2Fstory-starter-cards.webp&w=640&q=75",
+      "status": 200,
+      "imageFormat": "JPEG",
+      "width": 640,
+      "height": 349,
+      "bytes": 33115
+    }
+  ],
+  "browser": {
+    "catalogueImagesLoaded": 8,
+    "landscapeCompositionPreserved": true,
+    "productDetail": {
+      "sku": "moss-bear",
+      "loaded": true,
+      "width": 548,
+      "height": 299
+    },
+    "cartThumbnail": {
+      "sku": "moss-bear",
+      "loaded": true,
+      "width": 125,
+      "height": 125,
+      "totalCents": 2200
+    },
+    "testCartCleared": true,
+    "screenshot": "../screenshots/catalogue-photos.jpg"
+  },
+  "scope": "Catalogue imagery and presentation only; auth, payment and recommendation server code unchanged."
+}

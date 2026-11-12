@@ -15,7 +15,7 @@ Current Preview: https://erogine-preview-andor2.vercel.app/shop
 
 The 26 + 63 hosted checks ran before the budget-only client change, on application commit `9b6d903c811b039c370f6fff7e3e3c750ca04bcc`. Server code is unchanged in this release. The new build passed the four post-deploy HTTP checks and browser budget/cart checks described above. All three disposable QA accounts and the canceled QA order were removed; database counts returned zero and the owner's original order remained PAID.
 
-Running application commit: `537629dfe9ef9fb6fff9449ffac38bf043280c42`.
+Release-check application commit: `537629dfe9ef9fb6fff9449ffac38bf043280c42`.
 Release deployment: `erogine-dak6ck49a-andor2.vercel.app` (Preview).
 Machine-readable checkpoint: [verification/final-release.json](verification/final-release.json).
 
@@ -32,8 +32,14 @@ The first live OpenRouter checks received upstream HTTP 400 responses before the
 3. Record the continuous AI → cart → sandbox approval/capture → PAID receipt flow; reload the receipt and show My account. This can be the submission video.
 4. Make the repository public with MIT/source notices retained, upload a public YouTube video under three minutes and submit the demo, repository, video and description on Devpost.
 
-Public repository publication, final video and final submission are still pending. Photo replacement and broader AI experiments are deferred.
+Public repository publication, final video and final submission are still pending. The owner subsequently supplied eight matching product photos; their catalogue, recommendation, detail and cart display is covered in `verification/catalogue-images.json`. Broader AI experiments are deferred.
 
 ## Earlier checkpoint
 
 Before credentials were configured, 38 unit tests and 77 hosted checks passed. The earlier evidence remains in [verification/block-5.json](verification/block-5.json). That checkpoint specifically tested missing-provider configuration and did not establish real provider success. `scripts/verify-payments.ts` belongs to that earlier mode; `scripts/verify-release.ts` checks configured sandbox providers.
+
+## Catalogue photo update — 12 November 2026
+
+The subsequent image build (`84dce36441672415fcffc65b0a6f732ae53a5ceb`) is READY at the same stable Preview link. All eight owner-supplied images are mapped to their SKUs, served locally as WebP assets and used by the shared catalogue/recommendation/detail/cart component. The catalogue and detail views retain the original landscape composition.
+
+20 post-deploy HTTP checks passed, including all eight byte-matched assets, all eight product pages, the catalogue, configured service health and two resized image responses. Browser verification found all eight photos loaded, checked a product detail and matching cart thumbnail, then cleared the test cart. Source mapping and evidence: [verification/catalogue-images.json](verification/catalogue-images.json). Screenshot: [screenshots/catalogue-photos.jpg](screenshots/catalogue-photos.jpg). Server payment/auth/AI code was unchanged.
